@@ -1,6 +1,19 @@
-const text = require("./data");
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
-console.log(text);
+const server = http.createServer((req, res) => {
+  const filePath = path.join(
+    __dirname,
+    "./public",
+    req.url === "/" ? "home.html" : req.url
+  );
 
-console.log(__dirname); // => /home/jasurbek/Desktop/NodeJs`
-console.log(__filename); // =>/home/jasurbek/Desktop/NodeJs/index.js
+  fs.readFile(filePath, (err, data) => {
+    if (err) throw err;
+  });
+});
+
+server.listen(3000, () => {
+  console.log("Server hs been start.....");
+});
